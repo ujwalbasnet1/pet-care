@@ -43,9 +43,7 @@ class SelectedAvatar extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 8,
-        ),
+        SizedBox(height: 8),
         Container(
           width: 64,
           alignment: Alignment.center,

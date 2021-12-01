@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 class ContactTile extends StatefulWidget {
   final Contact contact;
   final Function(String) onInvitePressed;
+  final bool disableMargin;
+
   const ContactTile({
     this.contact,
     this.onInvitePressed,
+    this.disableMargin = false,
   });
 
   @override
@@ -40,10 +43,12 @@ class _ContactTileState extends State<ContactTile> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: 1,
-        horizontal: 20,
-      ),
+      margin: widget.disableMargin
+          ? null
+          : EdgeInsets.symmetric(
+              vertical: 1,
+              horizontal: 20,
+            ),
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

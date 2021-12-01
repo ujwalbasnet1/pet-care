@@ -39,6 +39,7 @@ class StoryItem extends StatelessWidget {
         padding: const EdgeInsets.only(right: 8.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               clipBehavior: Clip.none,
@@ -104,6 +105,7 @@ class StoryItem extends StatelessWidget {
                       ? title.substring(0, 10)
                       : title,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

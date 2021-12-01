@@ -97,102 +97,50 @@ class _StoryProfileMainState extends State<StoryProfileMain>
     return GradientBg(
       child: SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            iconTheme: IconThemeData(color: Colors.black),
+            shadowColor: Colors.transparent,
+            title: Text(
+              data["username"] ?? "",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
           backgroundColor: Colors.transparent,
-          body:
-              /*           slivers: [
-              // Add the app bar to the CustomScrollView.
-              SliverAppBar(
-                backgroundColor: Colors.transparent,
-                // Provide a standard title.
-                // title: Text(title),
-                // Allows the user to reveal the app bar if they begin scrolling
-                // back up the list of items.
-                floating: false,
-                automaticallyImplyLeading: true,
-                pinned: true,
-
-                flexibleSpace: UserStats(
-                    userName: data['username'],
-                    image: data['image'],
-                    petImage: data['pet_image'],
-                    petName: data['pet_name'],
-                    posts: (data['stories'].length).toString()),
-                expandedHeight: 300,
-              ),
-              // Next, create a SliverList
-           */ /*   SliverGrid(
-                // Use a delegate to build items as they're scrolled on screen.
-                delegate: SliverChildBuilderDelegate(
-                  // The builder function returns a ListTile with a title that
-                  // displays the index of the current item.
-                  (context, index) => LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return Card(
-                         //padding: EdgeInsets.all(5),
-                        child: VideoImageThumbnail(
-                          imageVideoPath: data['stories'][index]['url'],
-                          onTap: () {
-                            openScreen(
-                              context,
-                              ShortsMain(
-                                  isMaterial: true,
-                                  data: {'stories': data['stories']},
-                                  index: index),
-                            );
-                          },
-                        ),
-                      );
-
-                      // ListTile(title: Text('Item #$index'));
-                    },
-                  ),
-                  // Builds 1000 ListTiles
-                  childCount: data['stories'].length,
-                ),
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: MediaQuery.of(context).size.width / 3,
-                  // mainAxisSpacing: 10.0,
-                  // crossAxisSpacing: 10.0,
-                  childAspectRatio: 1.0,
-                ),
-              ),*/ /*
-            ], */
-
-              NestedScrollView(
+          body: NestedScrollView(
             headerSliverBuilder: (context, value) {
               return [
                 SliverAppBar(
                   iconTheme: IconThemeData(color: Colors.black),
                   backgroundColor: Colors.transparent,
-                  // Provide a standard title.
-                  // title: Text(title),
-                  // Allows the user to reveal the app bar if they begin scrolling
-                  // back up the list of items.
                   floating: false,
-                  automaticallyImplyLeading: true,
                   pinned: true,
-
-                  flexibleSpace: Container(
-                    child: UserStats(
-                      userName: data['username'],
-                      image: data['image'],
-                      petImage: data['pet_image'],
-                      petName: data['pet_name'],
-                      posts: (data['stories'].length).toString(),
+                  collapsedHeight: 0,
+                  toolbarHeight: 0,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    background: Container(
+                      child: UserStats(
+                        userName: data['username'],
+                        image: data['image'],
+                        petImage: data['pet_image'],
+                        petName: data['pet_name'],
+                        posts: (data['stories'].length).toString(),
+                      ),
                     ),
                   ),
                   bottom: PreferredSize(
                     preferredSize: _tabbar.preferredSize,
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      elevation: 2,
-                      color: Colors.white,
-                      child: _tabbar,
+                    child: Column(
+                      children: [
+                        Divider(height: 0),
+                        Container(color: Colors.white, child: _tabbar),
+                        Divider(height: 0),
+                      ],
                     ),
                   ),
-
-                  expandedHeight: 472,
+                  expandedHeight: 420,
                 ),
               ];
             },
