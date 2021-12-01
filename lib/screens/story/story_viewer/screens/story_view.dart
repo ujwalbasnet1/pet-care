@@ -192,10 +192,31 @@ class _StoryViewerState extends State<StoryViewer> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
                                     child: Text(
-                                      widget.data['username'],
+                                      widget.data['username'] ?? "",
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 5),
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 5,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color: Colors.red,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Follow",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                   Spacer(),
@@ -239,14 +260,17 @@ class _StoryViewerState extends State<StoryViewer> {
                           children: [
                             CircularButton(
                               color: Colors.transparent,
-                              icon: Icons.visibility,
+                              textColor: Colors.black,
+                              icon: Icons.visibility_outlined,
                               title: "${d['views']}",
                             ),
                             CircularButton(
-                              icon: Icons.favorite,
+                              textColor: Colors.black,
+                              icon: Icons.favorite_border,
                               title: "${d['likes']}",
                             ),
                             CircularButton(
+                              textColor: Colors.black,
                               icon: Icons.share,
                               title: "${d['views']}",
                             )

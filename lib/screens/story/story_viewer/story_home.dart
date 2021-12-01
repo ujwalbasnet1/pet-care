@@ -38,113 +38,123 @@ class _StoryHomeState extends State<StoryHome> {
     }
   }
 
-  storyRow(name, image, context, {Function() onTap}) {
-    final double size = 100;
+  storyRow(name, image, context, {Function() onTap, Function onFollowPressed}) {
+    final double size = 92;
     return Container(
-      height: size,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           StoryItem(
-              onTap: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
+            showAdd: true,
+            onTap: () {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 200,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  "assets/images/contact_add.png",
-                                ),
+                ),
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/contact_add.png",
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15.0, right: 5),
-                                child: ElevatedButton.icon(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => CameraView()));
-                                    },
-                                    icon: Icon(Icons.add),
-                                    label: Text('Add Story')),
-                              )),
-                              Expanded(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 5.0, right: 15),
-                                child: ElevatedButton.icon(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  StoryViewMain(
-                                                    initialPage: 0,
-                                                    data: jsonData,
-                                                  )));
-                                    },
-                                    icon: Icon(Icons.image),
-                                    label: Text('View Story')),
-                              )),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              size: size,
-              image: image,
-              title: name),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.horizontal,
-              itemCount: jsonData.length,
-              itemBuilder: (BuildContext context, int index) {
-                var data = jsonData[index];
-                return StoryItem(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => StoryViewMain(
-                                    initialPage: index,
-                                    data: jsonData,
-                                  )));
-                    },
-                    size: size,
-                    image: data['image'],
-                    title: data['username']);
-              },
-            ),
-          )
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15.0, right: 5),
+                              child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => CameraView()));
+                                  },
+                                  icon: Icon(Icons.add),
+                                  label: Text('Add Story')),
+                            )),
+                            Expanded(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 15),
+                              child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                StoryViewMain(
+                                                  initialPage: 0,
+                                                  data: jsonData,
+                                                )));
+                                  },
+                                  icon: Icon(Icons.image),
+                                  label: Text('View Story')),
+                            )),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            size: size,
+            image: image,
+            title: name,
+          ),
+          StoryItem(
+            fullTitle: true,
+            showAdd: true,
+            onTap: onFollowPressed,
+            size: size,
+            // image: image,
+            title: "Follow\nFriends",
+          ),
+
+          // Expanded(
+          //   child: ListView.builder(
+          //     padding: EdgeInsets.zero,
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: jsonData.length,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       var data = jsonData[index];
+          //       return StoryItem(
+          //           onTap: () {
+          //             Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                     builder: (BuildContext context) => StoryViewMain(
+          //                           initialPage: index,
+          //                           data: jsonData,
+          //                         )));
+          //           },
+          //           size: size,
+          //           image: data['image'],
+          //           title: data['username']);
+          //     },
+          //   ),
+          // )
         ],
       ),
     );

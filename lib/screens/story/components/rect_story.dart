@@ -57,7 +57,7 @@ class RectStory extends StatelessWidget {
       children: [
         _section(),
         Container(
-          height: 150,
+          height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: _horizonalList(),

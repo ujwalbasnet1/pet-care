@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
 
 class StoryItem extends StatelessWidget {
+  final bool showAdd;
   final String image;
   final String title;
   final Function() onTap;
   final double size;
-  const StoryItem(
-      {Key key, this.image, this.title, this.onTap, this.size = 120})
-      : super(key: key);
+  final bool fullTitle;
+
+  const StoryItem({
+    Key key,
+    this.image,
+    this.title,
+    this.onTap,
+    this.size = 120,
+    this.showAdd = false,
+    this.fullTitle = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final kInnerDecoration = BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.white, width: 5),
-        borderRadius: BorderRadius.circular(size),
-        image: DecorationImage(image: NetworkImage(image), fit: BoxFit.fill));
+      color: Colors.white,
+      border: Border.all(color: Colors.white, width: 5),
+      borderRadius: BorderRadius.circular(size),
+    );
 
     final kGradientBoxDecoration = BoxDecoration(
       gradient: LinearGradient(colors: [Colors.black, Colors.redAccent]),
@@ -31,17 +40,46 @@ class StoryItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Container(
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: kInnerDecoration,
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Container(
+                      decoration: kInnerDecoration,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: (image != null)
+                            ? Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) {
+                                  return SizedBox.shrink();
+                                },
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                    ),
+                  ),
+                  height: size - 30,
+                  width: size - 30,
+                  decoration: kGradientBoxDecoration,
                 ),
-              ),
-              height: size - 30,
-              width: size - 30,
-              decoration: kGradientBoxDecoration,
+                if (showAdd)
+                  Positioned(
+                    bottom: 0,
+                    right: -4,
+                    child: CircleAvatar(
+                      radius: 12,
+                      child: Icon(
+                        Icons.add,
+                        size: 12,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             // Container(
             //   height: size - 30,
@@ -60,9 +98,13 @@ class StoryItem extends StatelessWidget {
             //   ),
             // ),
             Text(
-              title.length > 10 ? title.substring(0, 10) : title,
+              fullTitle
+                  ? title
+                  : title.length > 10
+                      ? title.substring(0, 10)
+                      : title,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-            )
+            ),
           ],
         ),
       ),

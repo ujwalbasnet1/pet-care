@@ -7,8 +7,7 @@ class EarnedCoin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
-      padding: EdgeInsets.all(4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
           border: Border.all(color: Color(0xff2485FE)),
           borderRadius: BorderRadius.circular(30)),
@@ -20,7 +19,7 @@ class EarnedCoin extends StatelessWidget {
             padding: const EdgeInsets.only(left: 4, bottom: 2.0),
             child: Image.asset(
               "assets/images/coin.png",
-              height: 50,
+              height: 18,
             ),
           ),
           Padding(
@@ -29,7 +28,7 @@ class EarnedCoin extends StatelessWidget {
               " $coins ",
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold),
             ),
           )

@@ -193,6 +193,7 @@ class _HomeMainState extends State<HomeMain> {
                 height: 60,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
+                    // color: Colors.red,
                     image: DecorationImage(
                         fit: BoxFit.contain,
                         image:
@@ -217,7 +218,7 @@ class _HomeMainState extends State<HomeMain> {
                     key: index == 0
                         ? MarkHelper.swipeLeft.key
                         : Key(index.toString()),
-                    height: 175,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     // color: Colors.red,
                     child: Row(
                       // crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,9 +229,7 @@ class _HomeMainState extends State<HomeMain> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 20,
-                              ),
+                              SizedBox(height: 20),
                               Text(
                                 capitalize(petInfoData['name']) ?? "",
                                 style: latoTextStyle(fontSize: 25),
@@ -247,33 +246,31 @@ class _HomeMainState extends State<HomeMain> {
                                       color: Colors.grey,
                                       fontWeight: FontWeight.bold,
                                     ),
-                              )
+                              ),
+                              Container(
+                                height: 32,
+                                child: FloatingActionButton.extended(
+                                  icon: Icon(Icons.add),
+                                  label: Text("Pet Activity"),
+                                  onPressed: () {
+                                    showCustomModalAtBottom(context);
+                                  },
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Container(
-                            //   height: 150,
-                            //   width: 150,
-                            //   padding: EdgeInsets.all(10),
-                            //   child: Image.network(petInfoData['image']),
-                            // ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(75),
-                              child: Container(
-                                // padding: EdgeInsets.all(10),
-                                width: 150,
-                                height: 150,
-                                child: CustomImage(
-                                  url: petInfoData['image'],
-                                  // fit: BoxFit,
-                                ),
-                              ),
-                            )
-                          ],
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(75),
+                          child: Container(
+                            // padding: EdgeInsets.all(10),
+                            width: 120,
+                            height: 120,
+                            child: CustomImage(
+                              url: petInfoData['image'],
+                              // fit: BoxFit,
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -326,9 +323,13 @@ class _HomeMainState extends State<HomeMain> {
                           // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             new StoryHome().createState().storyRow(
-                                "${userInfo['fname']}",
-                                "${userInfo['avatar']}",
-                                context),
+                              "${userInfo['fname']}",
+                              "${userInfo['avatar']}",
+                              context,
+                              onFollowPressed: () {
+                                widget.onPressTabChange(4, 4);
+                              },
+                            ),
                             // Container(
                             //   height: 85,
                             //   width: double.maxFinite,
@@ -342,6 +343,7 @@ class _HomeMainState extends State<HomeMain> {
                             //   ),
                             // ),
                             uPro.getUserData == null ? Container() : _header(),
+                            const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(uPro.getPetList.length,
@@ -361,11 +363,12 @@ class _HomeMainState extends State<HomeMain> {
                                 );
                               }).toList(),
                             ),
+                            const SizedBox(height: 8),
                             _membersPoints(),
                             members.length > 1
                                 ? Container()
                                 : Container(
-                                    height: 100,
+                                    height: 72,
                                     margin: EdgeInsets.only(
                                       bottom: 20,
                                     ),
@@ -388,7 +391,7 @@ class _HomeMainState extends State<HomeMain> {
                                           6,
                                         ],
                                         child: Center(
-                                          child: Column(
+                                          child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
@@ -434,24 +437,19 @@ class _HomeMainState extends State<HomeMain> {
             );
           }
 
+          final double iconSize = 18;
+
           return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 elevation: 0.0,
-                title: Text(
-                  "",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
                 leading: Builder(
                   builder: (context) {
-                    return FlatButton(
+                    return TextButton(
                       child: Icon(
                         Icons.menu,
                         color: blueClassicColor,
-                        size: 35.0,
                       ),
                       onPressed: () {
                         logEvent(ScreenName.navigation, isEvent: true);
@@ -461,12 +459,53 @@ class _HomeMainState extends State<HomeMain> {
                   },
                 ),
                 actions: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  Center(
                     child: EarnedCoin(
                       coins: uPro.getTotalPoints ??
                           "0".toString(), // petInfoData['points'] ?? points,
                     ),
+                  ),
+                  const SizedBox(width: 8),
+                  PopupMenuButton(
+                    offset: Offset(0, 45),
+                    itemBuilder: (_) => <PopupMenuItem<String>>[
+                      PopupMenuItem<String>(
+                          child: Row(
+                            // mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Post'),
+                              Image.asset(
+                                "assets/images/schedule.png",
+                                height: 20,
+                                width: 20,
+                                color: Colors.black87,
+                              ),
+                            ],
+                          ),
+                          value: 'Post'),
+                      PopupMenuItem<String>(
+                          child: Row(
+                            // mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Reel'),
+                              Image.asset(
+                                "assets/images/video.png",
+                                height: 20,
+                                width: 20,
+                                color: Colors.black87,
+                              ),
+                            ],
+                          ),
+                          value: 'Reel'),
+                    ],
+                    child: Icon(
+                      Icons.add_box_outlined,
+                      color: Colors.blue,
+                      size: iconSize + 8,
+                    ),
+                    onSelected: (_) {},
                   ),
                   Container(
                     child: InkWell(
@@ -482,6 +521,8 @@ class _HomeMainState extends State<HomeMain> {
                         padding: const EdgeInsets.all(14),
                         child: Image.asset(
                           "assets/images/notification_final.png",
+                          height: iconSize,
+                          width: iconSize,
                         ),
                       ),
                     ),
@@ -523,10 +564,77 @@ class _HomeMainState extends State<HomeMain> {
         backgroundColor: Colors.transparent,
         body: body(),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: Icon(Icons.wallet_giftcard_outlined),
           onPressed: () {
-            showCustomModalAtBottom(context);
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return CheckInWidget();
+                });
           },
         ));
+  }
+}
+
+class CheckInWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(8),
+            topLeft: Radius.circular(8),
+          )),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            height: 6,
+            width: 56,
+            decoration: BoxDecoration(
+              color: Colors.black12,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+          SizedBox(height: 16),
+          Icon(
+            Icons.wallet_giftcard,
+            size: 84,
+            color: Colors.black54,
+          ),
+          SizedBox(height: 16),
+          Text(
+            "Checked in",
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black54),
+          ),
+          SizedBox(height: 8),
+          Text(
+            "You have checked in for 3 days.",
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54),
+          ),
+          SizedBox(height: 12),
+          Text(
+            "See in my check-in calender >",
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
+          ),
+          SizedBox(height: 24),
+        ],
+      ),
+    );
   }
 }

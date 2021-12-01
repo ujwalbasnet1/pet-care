@@ -19,16 +19,20 @@ class ButttonView extends StatelessWidget {
           CircularButton(
             color: Colors.transparent,
             icon: Icons.visibility_outlined,
-            iconColor: Colors.blue,
+            iconColor: Colors.red,
             title: views,
           ),
           CircularButton(
+            color: Colors.transparent,
             icon: Icons.favorite_border,
             title: likes,
+            iconColor: Colors.red,
           ),
           CircularButton(
+            color: Colors.transparent,
             icon: Icons.share_outlined,
             title: views,
+            iconColor: Colors.red,
           )
         ],
       ),

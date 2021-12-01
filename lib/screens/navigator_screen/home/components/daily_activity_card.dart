@@ -69,14 +69,13 @@ class _DailyActivityCardState extends State<DailyActivityCard> {
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Container(
-            width: widget.width * 0.15,
+            width: widget.width * 0.125,
             padding: EdgeInsets.only(left: 8),
             alignment: Alignment.center,
             child: !widget.image.toLowerCase().contains("walk")
-                ? CircleAvatar(
-                    radius: 45.0,
-                    backgroundColor: Colors.white,
-                    backgroundImage: AssetImage(widget.image),
+                ? Image.asset(
+                    widget.image,
+                    fit: BoxFit.fitWidth,
                   )
                 : Circular(
                     color: Colors.lightBlue[200],

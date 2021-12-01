@@ -5,14 +5,17 @@ class CircularButton extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
+  final Color textColor;
   final MaterialColor iconColor;
+
   const CircularButton({
     Key key,
     this.onTap,
     this.icon,
     this.title = "",
-    this.color = Colors.blue,
+    this.color,
     this.iconColor,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -23,19 +26,18 @@ class CircularButton extends StatelessWidget {
         children: [
           InkWell(
               onTap: () {},
-              child: CircleAvatar(
-                backgroundColor: color,
-                radius: 25,
-                child: Icon(
-                  icon,
-                  size: 30,
-                  color: iconColor ?? Colors.white,
-                ),
+              child: Icon(
+                icon,
+                size: 30,
+                color: iconColor ?? Colors.red,
               )),
           Text(
             title,
             style: TextStyle(
-                color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 18),
+              color: textColor ?? Colors.white,
+              fontWeight: FontWeight.normal,
+              fontSize: 14,
+            ),
           )
         ],
       ),

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:pets/screens/feed/feed.dart';
+import 'package:pets/screens/follow/follow.dart';
 import 'package:pets/screens/schedule_create/schedule_create.dart';
 import 'package:pets/screens/schedule_create/tasks/notes_tabs.dart';
 import 'package:pets/screens/schedule_list/schedule.dart';
@@ -193,9 +195,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
             careTaker = tab;
             onTabTapped(bottom);
           }),
+          //  TODO create feeds here
+          Feed(),
           Schedule(),
           CareTakerMain(currentTab: careTaker),
           // ShortsMain(),
+          //  TODO create follow here
+          Follow(),
           ShortsMain(data: {'stories': gifStories}),
         ];
         _bottomBar(
@@ -207,7 +213,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             key: key,
             onTap: () => onTabTapped(index),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -225,7 +231,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         ),
                   Text(
                     name,
-                    style: TextStyle(color: color),
+                    style: TextStyle(color: color, fontSize: 10),
                   )
                 ],
               ),
@@ -266,39 +272,52 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: BottomAppBar(
-                shape: CircularNotchedRectangle(),
-                notchMargin: 4.0,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _bottomBar(
-                      index: 0,
-                      name: "Home",
-                      imageUrl: "assets/images/home.png",
-                    ),
-                    _bottomBar(
-                      index: 1,
-                      name: "Schedule",
-                      imageUrl: "assets/images/schedule.png",
-                    ),
-                    Container(
-                      height: 0,
-                      width: 50,
-                    ),
-                    _bottomBar(
-                      key: MarkHelper.careTaker.key,
-                      index: 2,
-                      name: "Caretaker", //"Family",
-                      imageUrl: "assets/images/caretaker.png",
-                    ),
-                    _bottomBar(
-                      index: 3,
-                      name: "Shorts",
-                      imageUrl: "assets/images/shorts.png",
-                    ),
-                  ],
+              bottomNavigationBar: Container(
+                height: 48,
+                child: BottomAppBar(
+                  shape: CircularNotchedRectangle(),
+                  notchMargin: 4.0,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _bottomBar(
+                        index: 0,
+                        name: "Home",
+                        imageUrl: "assets/images/home.png",
+                      ),
+                      _bottomBar(
+                        index: 1,
+                        name: "Feed",
+                        imageUrl: "assets/images/trophy_feed.png",
+                      ),
+                      _bottomBar(
+                        index: 2,
+                        name: "Schedule",
+                        imageUrl: "assets/images/schedule.png",
+                      ),
+                      Container(
+                        height: 0,
+                        width: 50,
+                      ),
+                      _bottomBar(
+                        key: MarkHelper.careTaker.key,
+                        index: 3,
+                        name: "Caretaker", //"Family",
+                        imageUrl: "assets/images/caretaker.png",
+                      ),
+                      _bottomBar(
+                        index: 4,
+                        name: "Follow",
+                        imageUrl: "assets/images/follow.png",
+                      ),
+                      _bottomBar(
+                        index: 5,
+                        name: "Shorts",
+                        imageUrl: "assets/images/shorts.png",
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
